@@ -1,0 +1,4 @@
+[MongoDB] Connected to 127.0.0.1/threadcraft_boot_check
+Server running on port 5057 (production)
+Razorpay key loaded: yes
+Cloudinary configured: no (dev local-disk fallback)

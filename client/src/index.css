@@ -1,0 +1,544 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    @apply bg-canvas text-ink-900 min-h-screen antialiased;
+  }
+
+  ::selection {
+    background-color: #1e1c19;
+    color: #faf8f4;
+  }
+
+  #root {
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* ==========================================================================
+   Editorial type helpers
+   ========================================================================== */
+.eyebrow {
+  @apply text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-500;
+}
+
+.rule-heading {
+  @apply flex items-center gap-4;
+}
+
+.rule-heading::after {
+  content: '';
+  @apply h-px flex-1 bg-line;
+}
+
+/* ==========================================================================
+   Buttons — plain commerce buttons, square edges, restrained states
+   ========================================================================== */
+.btn {
+  @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-semibold transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-40;
+}
+
+.btn-primary {
+  @apply btn bg-ink-900 text-canvas hover:bg-ink-800;
+}
+
+.btn-secondary {
+  @apply btn border border-ink-900 bg-transparent text-ink-900 hover:bg-ink-900 hover:text-canvas;
+}
+
+.btn-quiet {
+  @apply btn border border-line bg-transparent text-ink-700 hover:border-ink-900 hover:text-ink-900;
+}
+
+/* ==========================================================================
+   Forms — flat fields with visible focus
+   ========================================================================== */
+.input {
+  @apply w-full border border-line bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder-ink-400 outline-none transition-colors focus:border-ink-900;
+}
+
+.field-label {
+  @apply mb-1.5 block text-xs font-medium text-ink-600;
+}
+
+/* ==========================================================================
+   Announcement strip (kept from original brand, muted)
+   ========================================================================== */
+.announcement-strip {
+  width: 100%;
+  min-height: 34px;
+  height: 34px;
+  background: #1e1c19;
+  color: #faf8f4;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.announcement-track {
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: announcement-scroll 30s linear infinite;
+}
+
+.announcement-track:hover {
+  animation-play-state: paused;
+}
+
+.announcement-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0 0.75rem;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.announcement-text {
+  color: #d9d4cc;
+}
+
+.announcement-separator {
+  color: #C25E43;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+@keyframes announcement-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+  .announcement-strip { min-height: 30px; height: 30px; }
+  .announcement-item { font-size: 9px; padding: 0 0.55rem; }
+}
+
+/* ==========================================================================
+   Custom scrollbar (subtle)
+   ========================================================================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #faf8f4;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d9d4cc;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c1b9ad;
+}
+
+/* ==========================================================================
+   Design-studio canvas grid (customizer)
+   ========================================================================== */
+.canvas-grid {
+  background-size: 20px 20px;
+  background-image:
+    linear-gradient(to right, rgba(30, 28, 25, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 28, 25, 0.05) 1px, transparent 1px);
+}
+
+/* Pulse helper used by the design studio while saving */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ==========================================================================
+   Preview entrance animations (custom design layer)
+   ========================================================================== */
+@keyframes custom-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes custom-slide-in {
+  from {
+    transform: translate(var(--design-x, 0px), calc(var(--design-y, 0px) + 30px)) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translate(var(--design-x, 0px), var(--design-y, 0px)) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes custom-zoom-in {
+  from {
+    transform: translate(var(--design-x, 0px), var(--design-y, 0px)) scale(0.3);
+    opacity: 0;
+  }
+  to {
+    transform: translate(var(--design-x, 0px), var(--design-y, 0px)) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes custom-bounce {
+  0% {
+    transform: translate(var(--design-x, 0px), calc(var(--design-y, 0px) - 40px)) scale(0.9);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(var(--design-x, 0px), calc(var(--design-y, 0px) + 10px)) scale(1.05);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(var(--design-x, 0px), calc(var(--design-y, 0px) - 5px)) scale(0.98);
+  }
+  100% {
+    transform: translate(var(--design-x, 0px), var(--design-y, 0px)) scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-custom-fade-in {
+  animation: custom-fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-custom-slide-in {
+  animation: custom-slide-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-custom-zoom-in {
+  animation: custom-zoom-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-custom-bounce {
+  animation: custom-bounce 0.8s ease-in-out forwards;
+}
+
+/* ==========================================================================
+   Legacy compatibility aliases
+   Some components still reference these utility names; they now map to the
+   grounded system (flat panels, hairline borders) instead of glass/glow.
+   ========================================================================== */
+.glass-panel {
+  background: #1e1c19;
+  border: 1px solid #33302a;
+}
+
+.glass-nav {
+  background: #faf8f4;
+}
+
+.glass-card {
+  background: #ffffff;
+  border: 1px solid #E7E2D9;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.glass-card:hover {
+  border-color: #c1b9ad;
+  box-shadow: 0 10px 30px -12px rgba(30, 28, 25, 0.18);
+}
+
+.support-card,
+.support-section {
+  border: 1px solid #E7E2D9;
+  background: #ffffff;
+  padding: 1.25rem;
+}
+
+.support-card {
+  display: block;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.support-card:hover {
+  border-color: #c1b9ad;
+  box-shadow: 0 10px 30px -12px rgba(30, 28, 25, 0.14);
+}
+
+.support-input {
+  width: 100%;
+  border: 1px solid #E7E2D9;
+  background: #ffffff;
+  padding: 0.75rem 1rem;
+  color: #1e1c19;
+  outline: none;
+}
+
+.support-input:focus {
+  border-color: #1e1c19;
+}
+
+/* ==========================================================================
+   Product gallery — restrained hover zoom (desktop only, product detail)
+   ========================================================================== */
+.gallery-zoom-container {
+  position: relative;
+  overflow: hidden;
+  cursor: zoom-in;
+  background: #f1ede5;
+}
+
+.gallery-zoom-container img.gallery-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.15s ease-out;
+  transform-origin: var(--zoom-x, 50%) var(--zoom-y, 50%);
+  will-change: transform;
+}
+
+@media (min-width: 768px) {
+  .gallery-zoom-container:hover img.gallery-main-img {
+    transform: scale(1.8);
+  }
+}
+
+.gallery-zoom-container .zoom-lens {
+  display: none;
+  position: absolute;
+  pointer-events: none;
+  width: 120px;
+  height: 120px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+  z-index: 5;
+}
+
+@media (min-width: 768px) {
+  .gallery-zoom-container:hover .zoom-lens {
+    display: block;
+  }
+}
+
+/* Thumbnail strip */
+.gallery-thumbs {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.gallery-thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-thumb {
+  flex: 0 0 auto;
+  width: 72px;
+  height: 90px;
+  overflow: hidden;
+  border: 1px solid #E7E2D9;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 160ms ease, border-color 160ms ease;
+  background: #f1ede5;
+  padding: 0;
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-thumb:hover {
+  opacity: 0.9;
+}
+
+.gallery-thumb.active {
+  opacity: 1;
+  border-color: #1e1c19;
+}
+
+/* Image crossfade on variant/colour change */
+.gallery-main-wrap {
+  position: relative;
+}
+
+.gallery-main-wrap img {
+  transition: opacity 0.35s ease;
+}
+
+/* ==========================================================================
+   Colour swatches — flat circles with an ink selection ring
+   ========================================================================== */
+.color-swatch {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(30, 28, 25, 0.25);
+  cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+  position: relative;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.color-swatch:hover {
+  border-color: #1e1c19;
+}
+
+.color-swatch.active {
+  border-color: #1e1c19;
+  box-shadow: 0 0 0 2px #faf8f4, 0 0 0 3.5px #1e1c19;
+}
+
+/* ==========================================================================
+   Customization modal (customizer) — light editorial panel
+   ========================================================================== */
+.customize-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(19, 18, 16, 0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: modal-backdrop-in 0.25s ease forwards;
+}
+
+@keyframes modal-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.customize-modal-panel {
+  width: 100%;
+  max-width: 1200px;
+  max-height: 92vh;
+  background: #faf8f4;
+  overflow-y: auto;
+  animation: modal-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  box-shadow: 0 -8px 40px rgba(19, 18, 16, 0.25);
+  scrollbar-width: thin;
+  scrollbar-color: #d9d4cc transparent;
+}
+
+.customize-modal-panel::-webkit-scrollbar {
+  width: 5px;
+}
+
+.customize-modal-panel::-webkit-scrollbar-thumb {
+  background: #d9d4cc;
+}
+
+@keyframes modal-slide-up {
+  from { transform: translateY(100%); opacity: 0.5; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@media (min-width: 768px) {
+  .customize-modal-backdrop {
+    align-items: center;
+  }
+  .customize-modal-panel {
+    max-height: 90vh;
+    margin: 1rem;
+  }
+  @keyframes modal-slide-up {
+    from { transform: translateY(40px) scale(0.97); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+  }
+}
+
+/* ==========================================================================
+   Nav helpers
+   ========================================================================== */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease forwards;
+}
+
+@keyframes slide-down {
+  from { opacity: 0; max-height: 0; }
+  to { opacity: 1; max-height: 500px; }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.25s ease forwards;
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.25s ease forwards;
+}
+
+/* ==========================================================================
+   Checkout / payment background — warm paper with a faint woven texture.
+   Purely decorative: low contrast, never interferes with form fields.
+   ========================================================================== */
+.checkout-bg {
+  background-color: #f6f3ec;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(30, 28, 25, 0.016) 0px,
+      rgba(30, 28, 25, 0.016) 1px,
+      transparent 1px,
+      transparent 7px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(30, 28, 25, 0.012) 0px,
+      rgba(30, 28, 25, 0.012) 1px,
+      transparent 1px,
+      transparent 9px
+    );
+}
+
+/* Hide scrollbar helper for horizontal product rails */
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

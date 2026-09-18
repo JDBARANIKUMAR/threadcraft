@@ -1,0 +1,19 @@
+# Environment files
+.env
+server/.env
+client/.env
+client/.env.local
+.env.local
+*.env
+!*.env.example
+
+# Deps & builds
+node_modules/
+client/dist/
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Misc
+out.json
+logs/
+*.log
