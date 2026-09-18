@@ -111,7 +111,9 @@ const ProductForm = ({ editMode = false }) => {
     }
   }, [editMode, id]);
 
-  const set = (patch) => setForm((f) => ({ ...f, ...patch }));
+  // Accepts a patch object OR an updater function (functional setState).
+  // Spreading a function is a silent no-op, so resolve it first.
+  const set = (patch) => setForm((f) => ({ ...f, ...(typeof patch === 'function' ? patch(f) : patch) }));
 
   const toggleSize = (size) =>
     set((f) => ({

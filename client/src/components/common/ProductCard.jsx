@@ -14,9 +14,10 @@ const ProductCard = ({ product }) => {
   const productId = product._id || product.id;
   const isFavorited = isInWishlist(productId);
 
-  // Colour-variant aware image: use the selected colour's mockup if present
+  // Colour-variant aware image: prefer the first variant's mockup (what the
+  // admin form saves), then the legacy mockupFront seed field, then gallery.
   const primaryImage =
-    product.availableColours?.[0]?.mockupFront || product.images?.[0] || '';
+    product.availableColours?.[0]?.mockup || product.availableColours?.[0]?.mockupFront || product.images?.[0] || '';
 
   const handleQuickAdd = (e) => {
     e.preventDefault();
