@@ -6,12 +6,19 @@
 #                                                        →  Razorpay
 
 [build]
-  base    = "client"
-  command = "npm run build"
-  publish = "dist"
+  # npm-workspaces monorepo (client + server): build from the repo root and
+  # target only the frontend workspace. Do NOT set base = "client" — that
+  # makes Netlify install from the nested client lockfile, which was generated
+  # on Windows and is missing the Linux native binaries for Vite/Rollup
+  # (npm/cli#4828: "Cannot find module @rollup/rollup-linux-x64-gnu").
+  # The explicit reinstall with --include=optional guarantees those optionals
+  # are present on the Linux build host even with a stale lockfile.
+  command = "npm install --include=optional && npm run build --workspace=threadcraft-client"
+  publish = "client/dist"
 
 [build.environment]
   NODE_VERSION = "20"
+  NPM_FLAGS = "--include=optional"
 
 # SPA fallback: every unknown route serves index.html so /shop, /product/:id,
 # /cart, /checkout, /login, /admin/* etc. survive hard refresh. The explicit
