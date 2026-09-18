@@ -80,6 +80,14 @@ const uploadDesignImage = async (req, res, next) => {
       const uploaded = await uploadToCloudinary(tempPath, folder);
       url = uploaded.url;
       publicId = uploaded.publicId;
+    } else if (process.env.NODE_ENV === 'production') {
+      // /uploads is only served in dev (see app.js) and Render's disk is
+      // ephemeral — a "successful" local save here would produce a dead URL.
+      // Fail loudly so the admin knows to set Cloudinary credentials.
+      return res.status(503).json({
+        success: false,
+        message: 'Image storage is not configured. Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET on the server.'
+      });
     } else {
       // Dev fallback (no Cloudinary credentials): keep the file under /uploads
       const destDir = require('path').join(__dirname, '../../uploads');

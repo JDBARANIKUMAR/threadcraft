@@ -48,16 +48,17 @@ const upload = multer({
  * banners | designs | customization). Unknown kinds default to products.
  */
 const folderForKind = (req) => {
-  const { cloudinaryConfig } = require('../config/cloudinary');
+  const { FOLDERS } = require('../config/cloudinary');
   const kind = String(req.query.kind || 'products').toLowerCase();
   const map = {
-    products: cloudinaryConfig.FOLDERS.PRODUCTS,
-    variants: cloudinaryConfig.FOLDERS.VARIANTS,
-    banners: cloudinaryConfig.FOLDERS.BANNERS,
-    designs: cloudinaryConfig.FOLDERS.DESIGNS,
-    customization: cloudinaryConfig.FOLDERS.CUSTOMIZATION
+    products: FOLDERS.PRODUCTS,
+    variants: FOLDERS.VARIANTS,
+    banners: FOLDERS.BANNERS,
+    designs: FOLDERS.DESIGNS,
+    customization: FOLDERS.CUSTOMIZATION,
+    categories: FOLDERS.CATEGORIES
   };
-  return map[kind] || cloudinaryConfig.FOLDERS.PRODUCTS;
+  return map[kind] || FOLDERS.PRODUCTS;
 };
 
 module.exports = { upload, folderForKind };

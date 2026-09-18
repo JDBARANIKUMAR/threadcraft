@@ -27,10 +27,11 @@ const FOLDERS = {
   VARIANTS: 'threadcraft/products/variants',
   BANNERS: 'threadcraft/banners',
   DESIGNS: 'threadcraft/designs',
-  CUSTOMIZATION: 'threadcraft/customization'
+  CUSTOMIZATION: 'threadcraft/customization',
+  CATEGORIES: 'threadcraft/categories'
 };
 
-const UPLOAD_FOLDERS = ['products', 'variants', 'banners', 'designs', 'customization'];
+const UPLOAD_FOLDERS = ['products', 'variants', 'banners', 'designs', 'customization', 'categories'];
 
 /**
  * Upload a local file (already validated & stored on disk by multer) to
